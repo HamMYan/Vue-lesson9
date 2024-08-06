@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue 9</title>
+    <style>
+        .valid {
+            color: green;
+        }
+
+        .invalid {
+            color: red;
+        }
+
+        .template{
+            width: 150px;
+            height: 150px;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <p>Type a valid e-mail address:</p>
+        <input type="email" v-model="inpAddress">
+        <p :class="myClass">{{feedbackText}}</p>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const app = Vue.createApp({
+            template: '<div class="template"><h1>Template example</h1></div>',    
+
+            data() {
+                return {
+                    inpAddress: '',
+                    feedbackText: '',
+                    myClass: 'invalid'
+                }
+            },
+
+            watch: {
+                inpAddress(newVal, oldVal) {
+                    if (!newVal.includes('@')) {
+                        this.feedbackText = 'The e-mail address is NOT valid'
+                        this.myClass = 'invalid'
+                    } else if (!oldVal.includes('@') && newVal.includes('@')) {
+                        this.feedbackText = 'Perfect! You fixed it!';
+                        this.myClass = 'valid'
+                    } else {
+                        this.feedbackText = 'The e-mail address is valid :)';
+                    }
+                }
+            },
+
+        })
+        app.mount('#app')
+    </script>
+</body>
+
+</html>
